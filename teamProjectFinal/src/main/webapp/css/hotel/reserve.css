@@ -1,0 +1,11 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
+
+.reserve {
+	margin: auto;
+	width: 600px;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	font-color: #e92126;
+}
+

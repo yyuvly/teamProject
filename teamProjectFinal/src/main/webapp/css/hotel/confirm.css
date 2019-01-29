@@ -1,0 +1,28 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
+
+.confirm {
+	margin: auto;
+	width: 400px;
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+
+table {
+	padding-left: 70px;
+	padding-right: 60px;
+	padding-bottom: 20px;
+}
+
+.user th, .dangdang th {
+	text-align: left;
+	width: 120px;
+}
+.user td, .dangdang td {
+	text-align: left;
+	width: 140px;
+}
+
+#grid {
+	padding-bottom: 50px;
+}

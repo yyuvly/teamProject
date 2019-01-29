@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="goodsDao">
+		<select id="list" resultType="goodsVO">
+			SELECT * FROM goods order by num desc
+		</select>
+		
+		<select id="detail" parameterType="int" resultType="goodsVO">
+			SELECT * FROM GOODS WHERE num = #{num}
+		</select>
+		
+		<select id="description" parameterType="int" resultType="goodsVO">
+			SELECT DESCRIPT FROM GOODS WHERE num = #{num}
+		</select>
+		
+		<insert id="insert" parameterType="goodsVO">
+			insert into goods (num, item, price, img, descript)
+			values (goods_seq.nextval, #{item}, #{price}, #{img}, #{descript})
+			<selectKey keyProperty="num" resultType="Integer">
+				select nvl(max(num),0) from goods
+			</selectKey>
+		</insert>
+		<update id="update" parameterType="goodsVO">
+			update goods set item=#{item},price=#{price},img=#{img},descript=#{descript}
+			where num=#{num}
+		</update>
+		<delete id="delete" parameterType="goodsVO">
+			delete from goods where num=#{num}
+		</delete>
+</mapper>

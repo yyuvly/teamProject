@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="controller.MainController">
+		<property name="memberService" ref="memberRegSvc" />
+		<!-- memberRegSvc객체는 spring-member.xml에 설정되어 있다. -->
+	</bean>
+
+	<bean class="controller.RegisterController">
+		<property name="memberService" ref="memberRegSvc" />
+	</bean>
+
+	<bean class="controller.LoginController">
+		<property name="memberService" ref="authSvc" />
+	</bean>
+
+	<bean class="controller.LogoutController" />
+
+	<bean class="controller.ChangeController">
+		<property name="memberService" ref="changeSvc" />
+	</bean>
+
+	<bean class="controller.MemberDetailController">
+		<property name="memberService" ref="detailSvc" />
+	</bean>
+
+	<bean class="controller.DeleteController">
+		<property name="memberService" ref="deleteSvc" />
+	</bean>
+	
+	<bean class="controller.CommonExceptionHandler" />
+
+	<bean id="goodsController" class="controller.GoodsController">
+		<property name="goodsService" ref="goodsServiceImpl"/>
+		<property name="cookieRegisterService" ref="cookieService"/>
+	</bean>
+	
+	<bean id="ordersController"	class="controller.OrdersController">
+		<property name="ordersService" ref="ordersServiceImpl" />
+		<property name="memberService" ref="memberService"/>	
+		<property name="CartRegisterService" ref="CartRegisterServiceImpl"/>
+	</bean>
+	
+	<bean id="reviewController"
+		class="controller.ReviewController">
+		<property name="reviewService" ref="reviewServiceImpl" />
+		<property name="ordersService" ref="ordersServiceImpl" />
+	</bean>
+
+	<bean id="CartListController" class="controller.CartListController">
+		<property name="CartRegisterService" ref="CartRegisterServiceImpl"/>
+	</bean>
+
+	<bean id="inquiryController" class="controller.InquiryController">
+		<property name="inquiryService" ref="inquiryServiceImpl"/>
+		<property name="memberService" ref="memberServiceImpl"/>
+	</bean>
+	
+	<bean id="hotelController" class="controller.HotelController">
+		<property name="memberService" ref="memberServiceImpl"/>
+	</bean>
+	
+	<bean class="controller.MypageController">
+		<property ref="detailSvc" name="memberService"/>
+	</bean>
+</beans>

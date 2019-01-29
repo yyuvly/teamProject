@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass"
+			value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl"
+			value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="user" value="me" />
+		<property name="password" value="1111" />
+		<property name="maxPoolSize" value="100" />
+		<property name="maxIdleTime" value="600" />
+		<property name="idleConnectionTestPeriod" value="300" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="classpath:config/mybatis-config.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:config/sqlmap-member.xml</value>
+				<value>classpath:config/sqlmap-goods.xml</value>
+				<value>classpath:config/sqlmap-review.xml</value>
+				<value>classpath:config/sqlmap-cart.xml</value>
+				<value>classpath:config/sqlmap-inquiry.xml</value>
+				<value>classpath:config/sqlmap-orders.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="memberDao" class="dao.MemberDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+
+	<bean id="goodsDao" class="dao.GoodsDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate"/>
+	</bean>
+	
+	<bean id="reviewDao" class="dao.ReviewDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	
+	<bean id="ordersDao" class="dao.OrdersDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	
+	<bean id="inquiryDao" class="dao.InquiryDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate"/>
+	</bean>
+	
+	<bean id = "CartItemDao" class= "dao.CartItemDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate"></constructor-arg>
+	</bean>
+
+	
+	<bean id="memberRegSvc" class="service.MemberServiceImpl">
+		<property name="memberDao" ref="memberDao" />
+	</bean>
+	<bean id="memberService" class="service.MemberServiceImpl">
+		<property name="memberDao" ref="memberDao" />
+	</bean>
+	<bean id="memberServiceImpl" class="service.MemberServiceImpl">
+		<property name="memberDao" ref="memberDao" />
+	</bean>
+	<bean id="changeSvc" class="service.MemberServiceImpl">
+		<property name="memberDao" ref="memberDao" />
+	</bean>
+
+	<bean id="authSvc" class="service.MemberServiceImpl">
+		<property name="memberDao" ref="memberDao" />
+	</bean>
+
+	<bean id="detailSvc" class="service.MemberServiceImpl">
+		<property name="memberDao" ref="memberDao" />
+	</bean>
+	
+	<bean id="deleteSvc" class="service.MemberServiceImpl">
+		<property name="memberDao" ref="memberDao" />
+	</bean>
+	
+	
+	<bean id="goodsService" class="service.GoodsServiceImpl">
+		<property name="goodsDao" ref="goodsDao"/>
+	</bean>
+	
+	<bean id="goodsServiceImpl" class="service.GoodsServiceImpl">
+		<property name="goodsDao" ref="goodsDao"/>
+	</bean>
+	
+	<bean id="cookieService" class="service.CookieRegisterService">
+	</bean>
+	
+	
+	<bean id="ordersServiceImpl" class="service.OrdersServiceImpl">
+		<property name="ordersDao" ref="ordersDao" />
+	</bean>
+	
+	<bean id="reviewServiceImpl" class="service.ReviewServiceImpl">
+		<property name="reviewDao" ref="reviewDao" />
+	</bean>
+	
+	<bean id="CartRegSvc" class="service.CartRegisterServiceImpl">
+		<property name="CartItemDao" ref="CartItemDao"></property>
+	</bean>
+	
+	<bean id="CartRegisterServiceImpl" class="service.CartRegisterServiceImpl">
+		<property name="CartItemDao" ref="CartItemDao"></property>
+	</bean>
+		
+	<bean id="inquiryService" class="service.InquiryServiceImpl">
+		<property name="inquiryDao" ref="inquiryDao"/>
+	</bean>
+	
+	<bean id="inquiryServiceImpl" class="service.InquiryServiceImpl">
+		<property name="inquiryDao" ref="inquiryDao"/>
+	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+</beans>

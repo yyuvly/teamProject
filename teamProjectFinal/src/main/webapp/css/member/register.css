@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.step1 {
+	margin: auto;
+	width: 700px;
+	padding-top: 100px;
+}
+
+.step2 {
+	margin: auto;
+	width: 500px;
+	padding-top: 100px;
+	position: relative;
+	/* relative 선언을 통해 하단바의 absolute position 이 정확한 위치에 오도록 한다.*/
+	min-height: 100%; 
+	padding-bottom: 100px;
+}
+s
+.step3 {
+	margin: auto;
+	width: 700px;
+	padding-top: 100px;
+	text-align: center;
+}

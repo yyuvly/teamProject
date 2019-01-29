@@ -1,0 +1,24 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
+
+
+.goods {
+	margin: auto;
+	width: 1000px;
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+
+th {
+	width: 120px;
+	text-align: center;
+}
+
+td {
+	text-align: right;
+}
+/* 
+.detailTable {
+	padding-left: 150px;
+}
+ */

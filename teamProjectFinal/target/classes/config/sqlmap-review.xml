@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reviewDao">
+	<select id="reviewcount" resultType="Integer">
+		select count(*) from review
+	</select>
+	<select id="reviewlist" resultType="reviewVO">
+		<![CDATA[select * from (select * from (select rownum rnum,num,item,id,content,type,img from review order by num desc) where rnum<=#{end}) where rnum>=#{start}]]>
+	</select>
+	<select id="hotelreviewcount" resultType="Integer">
+		select count(*) from review where type='hotel'
+	</select>
+	<select id="hotelreviewlist" resultType="reviewVO">
+		<![CDATA[select * from (select * from (select rownum rnum,num,item,id,content,type,img from (select * from review where type='hotel' order by num desc)) where rnum<=#{end}) where rnum>=#{start}]]>
+	</select>
+	<select id="goodsreviewcount" resultType="Integer">
+		select count(*) from review where type='item'
+	</select>
+	<select id="goodsreviewlist" resultType="reviewVO">
+		<![CDATA[select * from (select * from (select rownum rnum,num,item,id,content,type,img from (select * from review where type='item' order by num desc)) where rnum<=#{end}) where rnum>=#{start}]]>
+	</select>
+	<insert parameterType="reviewVO" id="regist">
+		insert into REVIEW (num, item, img, id, content, type) values (#{num},#{item},#{img},#{id},#{content},#{type}) 
+	<selectKey resultType="Integer" keyProperty="num">select nvl(max(num),0) from review </selectKey>
+	</insert>
+</mapper>

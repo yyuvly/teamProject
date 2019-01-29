@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.bottom {
+	position: absolute;
+	bottom: 0;
+	background-color: #f6f6f6;
+	text-align: center;
+	padding: 20px;
+	font-size: 12px;
+	width: 100%;
+} 

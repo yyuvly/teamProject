@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ordersDao">
+	<select id="orderscount" resultType="Integer">
+		select count(*) from orders
+	</select>
+	<select id="orderslist" resultType="ordersVO">
+		select * from (select rownum rnum,num,item,count,price,type,img from orders order by num desc) where <![CDATA[rnum>=#{start} and rnum<=#{end}]]>
+	</select>
+	
+	<insert id="insert" parameterType ="ordersVO">
+		insert into ORDERS (num, item, count, price, type, img, id, info, account, name, ordernum, regdate) 
+		values 
+		(ORDERS_SEQ.nextval, #{item}, #{count}, #{price}, #{type}, #{img}, #{id}, #{info}, #{account}, #{name}, #{ordernum}, SYSDATE)
+		<selectKey keyProperty ="num" resultType="Integer">
+		select nvl(max(NUM), 0) from ORDERS
+		</selectKey>
+	</insert>
+	
+	<select id="selectById" parameterType= "String" resultType="ordersVO">
+		SELECT * FROM 
+		ORDERS WHERE ID = #{id}
+	</select>
+	
+	<select id="selectByNum" parameterType="int"  resultType="ordersVO">
+	SELECT * FROM ORDERS WHERE NUM = #{num} 
+	</select>
+	
+	
+	
+</mapper>

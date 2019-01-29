@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false"/>
+		<setting name="useGeneratedKeys" value="false"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	<typeAliases>
+		<typeAlias alias="member" type="domain.Member"/>
+		<typeAlias alias="goodsVO" type="domain.GoodsVO"/>
+		<typeAlias alias="reviewVO" type="domain.ReviewVO" />
+		<typeAlias alias="CartItemVO" type="domain.CartItemVO"/>
+		<typeAlias alias="inquiryVO" type="domain.InquiryVO"/>
+		<typeAlias alias="ordersVO" type="domain.OrdersVO" />
+		<typeAlias alias="reviewVO" type="domain.ReviewVO" />
+	</typeAliases>
+</configuration>

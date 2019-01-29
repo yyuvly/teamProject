@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- DB에 사용할 쿼리 -->
+
+<mapper namespace="inquiryDao">
+
+	<select id="list" resultType="inquiryVO">
+		SELECT * FROM INQUIRY
+		ORDER BY RNUM DESC, RSTEP ASC
+	</select>
+	
+	<select id="select" parameterType="int" resultType="inquiryVO">
+		SELECT * FROM
+		INQUIRY WHERE NUM = #{num}
+	</select>
+	
+	<insert id="insert" parameterType="inquiryVO">
+		INSERT INTO INQUIRY (NUM, TYPE, ITEM, NAME, CONTENT, PASSWORD, CNT, REGDATE, RNUM, RSTEP, RLEVEL)
+		VALUES (INQUIRY_SEQ.nextval, #{type}, #{item}, #{name}, #{content}, #{password}, 0, SYSDATE, INQUIRY_SEQ.nextval, 0, 0)
+		<selectKey keyProperty="num" resultType="Integer">
+			SELECT NVL(MAX(NUM), 0) FROM INQUIRY
+		</selectKey>
+	</insert>
+
+	<update id="update" parameterType="inquiryVO">
+		UPDATE INQUIRY SET NAME = #{name},
+						TYPE = #{type},
+						ITEM = #{item},
+						CONTENT = #{content}
+						WHERE NUM = #{num} AND PASSWORD = #{password}
+	</update>
+	<update id="updateCount" parameterType="int">
+		UPDATE INQUIRY SET CNT = CNT + 1 WHERE NUM = #{num}
+	</update>
+	
+	<delete id="delete" parameterType="inquiryVO">
+		DELETE FROM INQUIRY WHERE NUM = #{num}
+		AND PASSWORD = #{password}
+	</delete>
+	<delete id="deleteAll">
+		DELETE FROM INQUIRY
+	</delete>
+	
+	
+	<!-- 답글 -->
+	
+	<!-- 답글 입력 -->
+	<insert id="replyInsert" parameterType="inquiryVO">
+		INSERT INTO INQUIRY (NUM, TYPE, ITEM, NAME, CONTENT, PASSWORD, CNT, REGDATE, RNUM, RSTEP, RLEVEL)
+		VALUES (INQUIRY_SEQ.nextval, #{type}, #{item}, #{name}, #{content}, #{password}, 0, SYSDATE, #{rnum}, #{rstep}+1, #{rlevel}+1)
+		<selectKey keyProperty="num" resultType="Integer">
+			SELECT NVL(MAX(NUM), 0) FROM INQUIRY
+		</selectKey>
+	</insert>
+	
+	<!-- 같은 ref를 가진 것 중에 현재 답글을 달 게시물의 순번보다 큰 것을  +1로 하며 하나씩 밀리게 한다.???? -->
+  	<update id="replyUpdate" parameterType="inquiryVO">
+		UPDATE INQUIRY SET RSTEP = RSTEP+1
+		WHERE RNUM = #{rnum} AND RSTEP > #{rstep}
+	</update> 
+
+	<select id="selectByType" parameterType="int" resultType="inquiryVO">
+		SELECT * FROM
+		INQUIRY WHERE TYPE= #{type}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
